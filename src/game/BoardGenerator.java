@@ -43,17 +43,14 @@ public class BoardGenerator {
         int i = cell.getX()+ depth;
         b.append(columnNames[i]);
 
-
+        // determine row
         double num = (cell.getX() + 1) / 2.0;
-        int rowStart = (int)Math.ceil(num);
+        int rowStart = (int)Math.ceil(num) + depth;
 
-        int labelNum = cell.getZ() + rowStart + depth;
+        int labelNum = cell.getZ() + rowStart;
         b.append(labelNum);
 
         return b.toString();
-
-
-
     }
 
     public static void main(String[] args) {
@@ -66,6 +63,6 @@ public class BoardGenerator {
         Cell cell1 = new Cell(0, 0, 0);
         Cell cell2 = new Cell(-1,0,1);
         Cell cell3 = new Cell(-1,-1,2);
-        System.out.println(getLabel(new Cell(3, 0, -3), 5));
+        System.out.println(getLabel(new Cell(-5, 3, 2), 5));
     }
 }

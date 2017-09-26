@@ -2,7 +2,7 @@ package game;
 
 public abstract class Piece {
 
-    int charge;
+    private int charge;
 
     public Piece(int charge) {
         this.charge = charge;

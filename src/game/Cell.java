@@ -3,11 +3,13 @@ package game;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cell {
+public class Cell implements Cloneable {
     private HashMap<CellDirection, Cell> neighbours = new HashMap<CellDirection, Cell>();
     private int x;
     private int y;
     private int z;
+    private String label = "";
+
 
     public int getX() {
         return x;
@@ -20,8 +22,6 @@ public class Cell {
     public int getZ() {
         return z;
     }
-
-    private String label = "";
 
     public Cell(int x, int y, int z) {
         if(x+y+z != 0){
@@ -68,4 +68,38 @@ public class Cell {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+    @Override
+    public Cell clone(){
+        try{
+            Object clone = super.clone();
+            if(clone.getClass() != this.getClass()) throw new IllegalStateException("cloning resulted in an object that " +
+                    "does not belong to this class");
+            Cell cell = (Cell) clone;
+            cell.x = x;
+            cell.y = y;
+            cell.z = z;
+
+            return cell;
+
+        }
+        catch (CloneNotSupportedException e){
+            return new Cell(x,y,z);
+
+        }
+
+    }
+
 }
