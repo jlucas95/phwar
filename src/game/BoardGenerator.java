@@ -28,7 +28,10 @@ public class BoardGenerator {
         }
         for (Cell cell : cells) {
             cell.setLabel(getLabel(cell, depth));
+
         }
+
+
         return new Board(cells);
     }
 

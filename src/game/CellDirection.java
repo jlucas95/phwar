@@ -6,6 +6,5 @@ public enum CellDirection {
     SOUTHEAST,
     SOUTH,
     SOUTHWEST,
-    NORTHWEST,
-
+    NORTHWEST
 }
