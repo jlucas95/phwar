@@ -42,18 +42,28 @@ public class CellOffset {
         return sum;
     }
 
+    //TODO: Maybe do this with relative angles instead of this ugliness
     public CellDirection getDirection(){
-        if(componentDifference() != 1) throw new IllegalStateException("Direction of offset can not be determined");
-        CellDirection[] dirs = new CellDirection[2];
-        // get the component that is different.
+        if(componentDifference() != 2) throw new IllegalStateException("Direction of offset can not be determined");
+
+        CellDirection direction = null;
+        // get the unchanged component and determine the direction.
         if(deltaX == 0) {
-            dirs[0] = CellDirection.NORTH;
-            dirs[1] = CellDirection.SOUTH;
+            // north or south
+            if(deltaY < 0) direction = CellDirection.NORTH;
+            if(deltaY > 0) direction = CellDirection.SOUTH;
         }
         else if(deltaY == 0){
-            dirs[0] = Cell.
+            if(deltaX < 0) direction = CellDirection.NORTHEAST;
+            if(deltaX > 0) direction = CellDirection.SOUTHWEST;
         }
-        // determine the direction
-
+        else if(deltaZ == 0){
+            if(deltaX < 0) direction = CellDirection.SOUTHEAST;
+            if(deltaX > 0) direction = CellDirection.NORTHWEST;
+        }
+        if (direction != null) {
+            return direction;
+        }
+        throw new IllegalStateException("Direction not found");
     }
 }

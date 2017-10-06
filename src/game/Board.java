@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Board {
 
+
     ArrayList<Cell> cells = new ArrayList<>();
 
     public Board(ArrayList<Cell> cells) {
@@ -18,17 +19,5 @@ public class Board {
 
     }
 
-    public List<Move> getMoves(RandomPlayer randomPlayer) {
-        List<Piece> pieces = randomPlayer.getPieces();
-        ArrayList<Move> moves = new ArrayList<>();
-        for (Piece piece : pieces) {
-            List<Move> pieceMoves = getMoves(piece);
-            moves.addAll(pieceMoves);
-        }
-        return moves;
-    }
 
-    private List<Move> getMoves(Piece piece) {
-        // do stuff
-    }
 }

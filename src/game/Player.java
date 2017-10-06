@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    abstract Move getMove(Board board);
+
+    public Game game;
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public abstract Move getMove(Board board);
+
     public List<Piece> getPieces(){
         return pieces;
     }

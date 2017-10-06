@@ -28,7 +28,13 @@ public class BoardGenerator {
         }
         for (Cell cell : cells) {
             cell.setLabel(getLabel(cell, depth));
-
+            for (Cell cell2 : cells) {
+                if(cell.isNeighbour(cell2)){
+                    CellOffset offset = new CellOffset(cell, cell2);
+                    CellDirection direction = offset.getDirection();
+                    cell.setNeighbour(cell2, direction);
+                }
+            }
         }
 
 

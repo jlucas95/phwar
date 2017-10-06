@@ -32,7 +32,14 @@ public class Cell implements Cloneable {
         this.z = z;
     }
 
+    public Cell setNeighbour(Cell c, CellDirection direction){
+        return neighbours.put(direction, c);
+    }
+
     public boolean isNeighbour(Cell cell){
+        // Return false for itself
+        if(this.equals(cell))return false;
+
         // Cells are neighbours if the sum of differences is smaller or equal to 2
         int xdiff = Math.abs(this.x - cell.x);
         int ydiff = Math.abs(this.y - cell.y);
