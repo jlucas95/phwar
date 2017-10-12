@@ -1,7 +1,7 @@
 package game;
 
 public class Neutron extends Piece {
-    public Neutron() {
-        super(0);
+    public Neutron(Player owner) {
+        super(0, owner);
     }
 }

@@ -1,7 +1,7 @@
 package game;
 
 public class Electron extends Piece {
-    public Electron(){
-        super(-1);
+    public Electron(Player owner){
+        super(-1, owner);
     }
 }

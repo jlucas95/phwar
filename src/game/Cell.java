@@ -27,14 +27,15 @@ public class Cell implements Cloneable {
         if(x+y+z != 0){
             throw new IllegalArgumentException("Coordinate components do not sum to one.");
         }
+        for (CellDirection dir : CellDirection.values()) neighbours.put(dir, null);
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public Cell setNeighbour(Cell c, CellDirection direction){
-        return neighbours.put(direction, c);
-    }
+    public Cell setNeighbour(Cell c, CellDirection direction){ return neighbours.put(direction, c); }
+
+    public Cell getNeigbour(CellDirection direction) { return neighbours.get(direction); }
 
     public boolean isNeighbour(Cell cell){
         // Return false for itself
@@ -73,7 +74,9 @@ public class Cell implements Cloneable {
     }
 
     public void setLabel(String label) {
-        this.label = label;
+
+        if(label != null) this.label = label;
+        throw new NullPointerException("Label may not be null");
     }
 
     public void setX(int x) {

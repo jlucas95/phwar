@@ -8,10 +8,7 @@ public class BoardGenerator {
 
     int depth;
     public BoardGenerator(int depth) {
-
         this.depth = depth;
-
-
     }
 
     public Board build(){

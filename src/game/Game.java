@@ -1,8 +1,5 @@
 package game;
 
-import algorithms.RandomPlayer;
-import javafx.geometry.Pos;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ public class Game {
     Board board;
     int turn;
 
-    List<Piece> pieces;
+    GameState state;
 
     public Game(Board board){
         turn = 0;
@@ -24,7 +21,7 @@ public class Game {
     }
 
     private void setUpPieces(){
-        pieces = new ArrayList<>();
+        state = GameState.getStartState(player1, player2);
 
     }
 
@@ -43,13 +40,17 @@ public class Game {
         Player currentPlayer = player1;
         while (!done){
             Move move = currentPlayer.getMove(board);
-            board.apply(move);
+            state = Game.apply(move);
 
             // determine end of game.
             if(endgameCheck(otherPlayer(currentPlayer))){done = true;}
             //switch players
             currentPlayer = otherPlayer(currentPlayer);
         }
+    }
+
+    private static GameState apply(Move move) {
+        return null;
     }
 
     private Player otherPlayer(Player currentPlayer) {
@@ -85,8 +86,23 @@ public class Game {
     }
 
     private List<Move> getMoves(Piece piece) {
-        // do stuff
-        return null;
+        ArrayList<Move> moves = new ArrayList<>();
+        Cell start = piece.getCell();
+        for (CellDirection direction : CellDirection.values()) {
+            Cell origin = start;
+            boolean canContinue = true;
+            while(canContinue) {
+                Cell destination = origin.getNeigbour(direction);
+                if (destination != null || !destination.getLabel().equals("F6")) {
+                    // TODO: Check for capture situation
+                    Move move = new Move(piece, origin, destination);
+                    moves.add(move);
+                    origin = destination;
+                }
+                else{ canContinue = false; }
+            }
+        }
+        return moves;
     }
 
 }
