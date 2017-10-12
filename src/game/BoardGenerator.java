@@ -24,7 +24,8 @@ public class BoardGenerator {
             }
         }
         for (Cell cell : cells) {
-            cell.setLabel(getLabel(cell, depth));
+            String label = getLabel(cell, depth);
+            cell.setLabel(label);
             for (Cell cell2 : cells) {
                 if(cell.isNeighbour(cell2)){
                     CellOffset offset = new CellOffset(cell, cell2);

@@ -1,5 +1,8 @@
 package game;
 
+import java.util.function.DoubleConsumer;
+import java.util.function.IntFunction;
+
 /**
  * Represents the difference between 2 cells
  */
@@ -21,6 +24,9 @@ public class CellOffset {
         this.deltaZ = cell1.getZ() - cell2.getZ();
     }
 
+    public int distance(){
+        return (Math.abs(deltaX) + Math.abs(deltaY) + Math.abs(deltaZ)) / 2;
+    }
 
     public Cell apply(Cell c){
         Cell clone = c.clone();
@@ -43,6 +49,11 @@ public class CellOffset {
     }
 
     //TODO: Maybe do this with relative angles instead of this ugliness
+
+    /**
+     * Gives the CellDirection for the offset as seen from cell1.
+     * @return Direction of the offset.
+     */
     public CellDirection getDirection(){
         if(componentDifference() != 2) throw new IllegalStateException("Direction of offset can not be determined");
 
@@ -65,5 +76,9 @@ public class CellOffset {
             return direction;
         }
         throw new IllegalStateException("Direction not found");
+    }
+
+    public boolean LOS() {
+        return componentDifference() == 2;
     }
 }

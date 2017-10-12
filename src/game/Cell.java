@@ -1,26 +1,23 @@
 package game;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Cell implements Cloneable {
     private HashMap<CellDirection, Cell> neighbours = new HashMap<CellDirection, Cell>();
-    private int x;
-    private int y;
-    private int z;
+    private Coordinate coordinate;
     private String label = "";
 
 
     public int getX() {
-        return x;
+        return coordinate.getX();
     }
 
     public int getY() {
-        return y;
+        return coordinate.getY();
     }
 
     public int getZ() {
-        return z;
+        return coordinate.getZ();
     }
 
     public Cell(int x, int y, int z) {
@@ -28,9 +25,7 @@ public class Cell implements Cloneable {
             throw new IllegalArgumentException("Coordinate components do not sum to one.");
         }
         for (CellDirection dir : CellDirection.values()) neighbours.put(dir, null);
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.coordinate = new Coordinate(x,y,z);
     }
 
     public Cell setNeighbour(Cell c, CellDirection direction){ return neighbours.put(direction, c); }
@@ -42,9 +37,9 @@ public class Cell implements Cloneable {
         if(this.equals(cell))return false;
 
         // Cells are neighbours if the sum of differences is smaller or equal to 2
-        int xdiff = Math.abs(this.x - cell.x);
-        int ydiff = Math.abs(this.y - cell.y);
-        int zdiff = Math.abs(this.z - cell.z);
+        int xdiff = Math.abs(this.coordinate.getX() - cell.getX());
+        int ydiff = Math.abs(this.coordinate.getY() - cell.getY());
+        int zdiff = Math.abs(this.coordinate.getZ() - cell.getZ());
         return xdiff + ydiff + zdiff <=2;
 
     }
@@ -56,16 +51,16 @@ public class Cell implements Cloneable {
 
         Cell cell = (Cell) o;
 
-        if (x != cell.x) return false;
-        if (y != cell.y) return false;
-        return z == cell.z;
+        if (getX() != cell.getX()) return false;
+        if (getY() != cell.getY()) return false;
+        return getZ() == cell.getZ();
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        result = 31 * result + z;
+        int result = getX();
+        result = 31 * result + getY();
+        result = 31 * result + getZ();
         return result;
     }
 
@@ -76,20 +71,14 @@ public class Cell implements Cloneable {
     public void setLabel(String label) {
 
         if(label != null) this.label = label;
-        throw new NullPointerException("Label may not be null");
+        else throw new NullPointerException("Label may not be null");
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void setX(int x) {this.coordinate.setX(x);}
 
-    public void setY(int y) {
-        this.y = y;
-    }
+    public void setY(int y) {this.coordinate.setY(y);}
 
-    public void setZ(int z) {
-        this.z = z;
-    }
+    public void setZ(int z) {this.coordinate.setZ(z);}
 
     @Override
     public Cell clone(){
@@ -98,18 +87,29 @@ public class Cell implements Cloneable {
             if(clone.getClass() != this.getClass()) throw new IllegalStateException("cloning resulted in an object that " +
                     "does not belong to this class");
             Cell cell = (Cell) clone;
-            cell.x = x;
-            cell.y = y;
-            cell.z = z;
-
+            cell.setX(getX());
+            cell.setY(getY());
+            cell.setZ(getZ());
             return cell;
 
         }
         catch (CloneNotSupportedException e){
-            return new Cell(x,y,z);
+            return new Cell(getX(),getY(),getZ());
 
         }
 
     }
 
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "coordinate=" + coordinate +
+                ", label='" + label + '\'' +
+                '}';
+    }
 }

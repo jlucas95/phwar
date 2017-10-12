@@ -5,7 +5,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO: Maybe make board static
 public class Board {
 
 
@@ -25,8 +25,12 @@ public class Board {
     }
 
     public Cell getCell(int x, int y, int z){
+        return getCell(new Coordinate(x,y,z));
+    }
+
+    public Cell getCell(Coordinate coordinate){
         for (Cell cell : cells) {
-            if (cell.getX() == x && cell.getY() == y && cell.getZ() == z) {
+            if(cell.getCoordinate().equals(coordinate)){
                 return cell;
             }
         }
