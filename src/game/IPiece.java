@@ -6,11 +6,11 @@ package game;
 public interface IPiece {
 
 
-    public int getCharge();
+    int getCharge();
 
-    public Cell getCell();
+    Cell getCell();
 
-    public void setCell(Cell cell);
+    void setCell(Cell cell);
 
-    public IPlayer getOwner();
+    IPlayer getOwner();
 }

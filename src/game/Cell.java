@@ -3,7 +3,7 @@ package game;
 import java.util.HashMap;
 
 public class Cell implements Cloneable {
-    private HashMap<CellDirection, Cell> neighbours = new HashMap<CellDirection, Cell>();
+    private HashMap<CellDirection, Cell> neighbours = new HashMap<>();
     private Coordinate coordinate;
     private String label = "";
 
@@ -51,9 +51,7 @@ public class Cell implements Cloneable {
 
         Cell cell = (Cell) o;
 
-        if (getX() != cell.getX()) return false;
-        if (getY() != cell.getY()) return false;
-        return getZ() == cell.getZ();
+        return getX() == cell.getX() && getY() == cell.getY() && getZ() == cell.getZ();
     }
 
     @Override

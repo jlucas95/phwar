@@ -1,18 +1,16 @@
 package algorithms;
 
-import game.Board;
-import game.Move;
-import game.IPlayer;
+import game.*;
 
 import java.util.List;
 import java.util.Random;
 
-public class RandomPlayer extends IPlayer {
+public class RandomPlayer extends Player implements IPlayer {
 
-    Random random;
+    private Random random;
     @Override
-    public Move getMove(Board board) {
-        List<Move> moves = game.state.getMoves(this);
+    public Move getMove(GameState state) {
+        List<Move> moves = state.getMoves(this);
         int index = random.nextInt(moves.size());
         return moves.get(index);
     }

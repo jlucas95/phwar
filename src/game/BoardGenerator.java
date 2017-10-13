@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class BoardGenerator {
 
-    ArrayList<Cell> cells = new ArrayList<Cell>();
+    private ArrayList<Cell> cells = new ArrayList<>();
 
-    int depth;
+    private int depth;
     public BoardGenerator(int depth) {
         this.depth = depth;
     }

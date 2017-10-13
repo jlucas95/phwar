@@ -1,15 +1,11 @@
 package game;
 
-import algorithms.RandomPlayer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
-import java.util.List;
 // TODO: Maybe make board static
 public class Board {
 
 
-    ArrayList<Cell> cells = new ArrayList<>();
+    private ArrayList<Cell> cells = new ArrayList<>();
 
     public Board(ArrayList<Cell> cells) {
         this.cells = cells;

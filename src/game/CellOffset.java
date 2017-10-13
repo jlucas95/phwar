@@ -1,8 +1,5 @@
 package game;
 
-import java.util.function.DoubleConsumer;
-import java.util.function.IntFunction;
-
 /**
  * Represents the difference between 2 cells
  */
@@ -25,7 +22,7 @@ public class CellOffset {
     }
 
     public int distance(){
-        return (Math.abs(deltaX) + Math.abs(deltaY) + Math.abs(deltaZ)) / 2;
+        return abssum() / 2;
     }
 
     public Cell apply(Cell c){
