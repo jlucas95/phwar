@@ -15,6 +15,11 @@ public class RandomPlayer extends Player implements IPlayer {
         return moves.get(index);
     }
 
+    @Override
+    public String toString() {
+        return "RandomPlayer";
+    }
+
     public RandomPlayer(long seed){
         random = new Random(seed);
     }

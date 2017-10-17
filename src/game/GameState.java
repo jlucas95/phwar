@@ -11,11 +11,14 @@ public class GameState {
 
     private Game game;
 
+    IPlayer currentPlayer;
 
 
-    public GameState(List<Piece> pieces, Game game) {
+
+    public GameState(List<Piece> pieces, Game game, IPlayer startingPlayer) {
         this.pieces = pieces;
         this.game = game;
+        this.currentPlayer = startingPlayer;
     }
 
 
@@ -75,7 +78,7 @@ public class GameState {
         neutron1.setCell(board.getCell(0, -5, 5));
         pieces.add(neutron1);
 
-        return new GameState(pieces, game);
+        return new GameState(pieces, game, player1);
     }
 
     public static GameState getStartState(IPlayer player1, IPlayer player2, Game game ) {
@@ -115,7 +118,7 @@ public class GameState {
             newPieces.add(p);
         }
         pieces.addAll(newPieces);
-        return new GameState(pieces, game);
+        return new GameState(pieces, game, player1);
     }
 
     public void apply(Move move){
@@ -124,8 +127,22 @@ public class GameState {
 
     public GameState getNewState(Move move) {
         GameState newState = new GameState(this);
+        if(!moveIsLegal(move)) throw new IllegalArgumentException("Move is not legal in this state.");
+
         newState.apply(move);
+        newState.currentPlayer = game.otherPlayer(currentPlayer);
         return newState;
+    }
+
+    private boolean moveIsLegal(Move move) {
+        // TODO Check if move is legal
+        // Piece must belong tot the current player
+        Piece piece = move.getPiece();
+        // Piece must be on the origin position
+        Cell origin = move.getOrigin();
+        // Destination may not be occupied unless this is a capture
+        Cell destination = move.getDestination();
+        return true;
     }
 
     public List<Piece> getPieces() {
@@ -263,10 +280,30 @@ public class GameState {
     }
 
     public boolean isEndgame() {
-        return !hasAllPieces(game.player1) || !hasAllPieces(game.player2);
+        boolean P1defeated = !hasAllPieces(game.player1);
+        boolean P2Defeated = !hasAllPieces(game.player2);
+        boolean neutronInF6 = neutronInMiddle();
+        
+        boolean b = P1defeated || P2Defeated;
+        return b;
     }
 
-    private boolean hasAllPieces(IPlayer player){
+    private boolean neutronInMiddle() {
+        return getNeutronInMiddle() != null;
+    }
+
+    public Piece getNeutronInMiddle(){
+        try {
+            return new QueryableList<>(pieces)
+                    .where(p->   p.getCell().getLabel().equals("F6")
+                            && p.getClass() == Neutron.class)
+                    .Single();
+        } catch (IllegalStateException ex){
+            return null;
+        }
+    }
+
+    public boolean hasAllPieces(IPlayer player){
         int electrons = 0;
         int neutrons = 0;
         int positrons = 0;
@@ -275,6 +312,10 @@ public class GameState {
             if (piece.getClass() == Neutron.class) neutrons++;
             if (piece.getClass() == Positron.class) positrons++;
         }
-        return electrons == 0 || neutrons == 0 || positrons == 0;
+        return electrons != 0 && neutrons != 0 && positrons != 0;
+    }
+
+    public IPlayer getCurrentPlayer() {
+        return currentPlayer;
     }
 }

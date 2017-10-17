@@ -11,7 +11,7 @@ import static algorithms.MiniMaxType.MIN;
 /**
  * Created by Jan on 13-10-2017.
  */
-public class MiniMaxPlayer <X extends EvaluationFunction> extends Player {
+public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
 
     private X evalFunc;
     private int searchDept;
@@ -19,6 +19,7 @@ public class MiniMaxPlayer <X extends EvaluationFunction> extends Player {
     public MiniMaxPlayer(X evalFunction, int searchDept){
         this.evalFunc = evalFunction;
         this.searchDept = searchDept;
+        this.evalFunc.setPlayer(this);
     }
 
     @Override
@@ -31,22 +32,30 @@ public class MiniMaxPlayer <X extends EvaluationFunction> extends Player {
         Tuple<Integer, Move> score;
         if(type == MAX){
             score = new Tuple<>(Integer.MIN_VALUE, null);
-            for(Tuple<Move, GameState> sPrime : s.getSuccessors(this)){
-                Tuple<Integer, Move> value = miniMax(sPrime.getSecond(), depth - 1, MIN, sPrime.getFirst());
-                if(value.getFirst() > score.getFirst()) score = value;
+            for(Tuple<Move, GameState> successor : s.getSuccessors(this)){
+                Move move = successor.getFirst();
+                GameState sPrime = successor.getSecond();
+                Tuple<Integer, Move> value = miniMax(sPrime, depth - 1, MIN, move);
+
+                Integer newScore = value.getFirst();
+                if(newScore > score.getFirst()) score = new Tuple<>(newScore, move);
             }
         }
         else{
             score = new Tuple<>(Integer.MAX_VALUE, null);
-            for(Tuple<Move, GameState> sPrime : s.getSuccessors(game.otherPlayer(this))){
-                Tuple<Integer, Move> value = miniMax(sPrime.getSecond(), depth - 1, MAX, sPrime.getFirst());
-                if( value.getFirst() < score.getFirst()) score = value;
+            for(Tuple<Move, GameState> successor : s.getSuccessors(game.otherPlayer(this))){
+                Move move = successor.getFirst();
+                GameState sPrime = successor.getSecond();
+                Tuple<Integer, Move> value = miniMax(sPrime, depth - 1, MAX, move);
+                Integer newScore = value.getFirst();
+                if( newScore < score.getFirst()) score = new Tuple<>(newScore, move);
             }
         }
         return score;
     }
 
-    private boolean terminalNode(GameState s) {
-        return s.isEndgame();
+    @Override
+    public String toString() {
+        return "MiniMaxPlayer";
     }
 }
