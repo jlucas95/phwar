@@ -15,7 +15,6 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
     public AlphaBetaPlayer(X evalFunc, int depth) {
         this.evalFunc = evalFunc;
         this.depth = depth;
-        evalFunc.setPlayer(this);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
 
     private Tuple<Integer, Move> alphaBeta(GameState s, int depth, int alpha, int beta, Move m) {
         if(depth == 0 || terminalNode(s)) return new Tuple<>(
-                evalFunc.evaluate(s), m);
+                evalFunc.evaluate(s, this), m);
         Tuple<Integer, Move> scoreT = new Tuple<Integer, Move>(Integer.MIN_VALUE, null);
 
         for (Tuple<Move, GameState> successor : s.getSuccessors(s.getCurrentPlayer())) {
