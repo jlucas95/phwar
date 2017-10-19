@@ -7,6 +7,8 @@ public class Board {
 
     private ArrayList<Cell> cells = new ArrayList<>();
 
+    private Cell center;
+
     public Board(ArrayList<Cell> cells) {
         this.cells = cells;
     }
@@ -18,6 +20,13 @@ public class Board {
             }
         }
         throw new IllegalArgumentException("Cell with given label does not exist.");
+    }
+
+    public Cell getCenterCell(){
+        if (center == null) {
+            center = getCell(0,0,0);
+        }
+        return center;
     }
 
     public Cell getCell(int x, int y, int z){

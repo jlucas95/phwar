@@ -1,9 +1,6 @@
 package entrypoints;
 
-import algorithms.AlphaBetaPlayer;
-import algorithms.MiniMaxPlayer;
-import algorithms.PieceEvaluationFunction;
-import algorithms.RandomPlayer;
+import algorithms.*;
 import game.*;
 
 /**
@@ -15,7 +12,7 @@ public class AlphaBetaEntry {
     public static void main(String[] args) {
         Board board = new BoardGenerator(5).build();
         IPlayer r1 = new RandomPlayer(System.currentTimeMillis());
-        IPlayer r2 = new AlphaBetaPlayer<>(new PieceEvaluationFunction(), 2);
+        IPlayer r2 = new AlphaBetaPlayer<>(new WeightedEvaluation(), 2);
         Game game = new Game(board, r1, r2);
         GameResult result = game.play();
 

@@ -18,10 +18,11 @@ abstract public class Queryable<T> extends ArrayList<T> {
         super();
     }
 
-    public <K> MultiMap<K,T>  groupBy(Function<T, K> selector){
-        MultiMap<K, T> groups = new MultiMap<>();
+    public <K> IGrouping<K, T>  groupBy(Function<T, K> selector){
+        Grouping<K, T> groups = new Grouping<>();
         for (T t : this) {
-            groups.put(selector.apply(t), t);
+            groups.add(selector.apply(t), t);
+            groups.addAll(selector.apply(t), this);
         }
         return groups;
     }
@@ -48,7 +49,12 @@ abstract public class Queryable<T> extends ArrayList<T> {
         return this.get(0);
     }
 
-    public T Single() {
+    /**
+     * Returns the single element in this Queryable
+     * @throws IllegalStateException if the Queryable contains less or more than 1 element.
+     * @return The lone element of this Queryable
+     */
+    public T single() {
         if(size() != 1){throw new IllegalStateException("Queryable contains more or less than 1 element"); }
         return first();
     }
@@ -56,5 +62,32 @@ abstract public class Queryable<T> extends ArrayList<T> {
     public boolean any(){
         return size() != 0;
     }
+
+    public int sumInt(Function<T, Integer> sumFunction){
+        int sum = 0;
+        for(T t : this){
+            sum += sumFunction.apply(t);
+        }
+        return sum;
+    }
+
+    public double sumDouble(Function<T, Double> sumFunction){
+        double sum = 0;
+        for(T t : this){
+            sum += sumFunction.apply(t);
+        }
+        return sum;
+    }
+
+    public Queryable<T> distinct(){
+        Queryable<T> distinct = new QueryableList<>();
+        for (T t : this) {
+            if(!distinct.contains(t)){
+                distinct.add(t);
+            }
+        }
+        return distinct;
+    }
+
 
 }

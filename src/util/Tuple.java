@@ -12,7 +12,6 @@ public class Tuple<T, U> {
         U = t1;
     }
 
-
     public T getFirst() {
         return T;
     }

@@ -48,7 +48,7 @@ public class CellOffset {
     //TODO: Maybe do this with relative angles instead of this ugliness
 
     /**
-     * Gives the CellDirection for the offset as seen from cell1.
+     * Gives the CellDirection for the offset as seen from cell 1.
      * @return Direction of the offset.
      */
     public CellDirection getDirection(){

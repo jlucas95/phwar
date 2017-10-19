@@ -297,7 +297,7 @@ public class GameState {
             return new QueryableList<>(pieces)
                     .where(p->   p.getCell().getLabel().equals("F6")
                             && p.getClass() == Neutron.class)
-                    .Single();
+                    .single();
         } catch (IllegalStateException ex){
             return null;
         }
@@ -317,5 +317,33 @@ public class GameState {
 
     public IPlayer getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public List<Cell> getLoS(Piece piece) {
+        ArrayList<Cell> cells = new ArrayList<>();
+        Cell origin = piece.getCell();
+        for (CellDirection direction : CellDirection.values()) {
+            Cell currentCell = origin;
+            boolean canContinue = true;
+            while(canContinue){
+                currentCell = currentCell.getNeigbour(direction);
+                // stop if cell is occupied or if null
+                if(currentCell != null && !cellOccupied(currentCell)){
+                    canContinue = false;
+                }
+                else{
+                    cells.add(currentCell);
+                }
+            }
+        }
+        return cells;
+    }
+
+    public Board getBoard() {
+        return game.board;
+    }
+
+    public IPlayer getOpponent(IPlayer player) {
+        return game.otherPlayer(player);
     }
 }
