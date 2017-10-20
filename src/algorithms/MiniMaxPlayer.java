@@ -19,7 +19,6 @@ public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
     public MiniMaxPlayer(X evalFunction, int searchDept){
         this.evalFunc = evalFunction;
         this.searchDept = searchDept;
-        this.evalFunc.setPlayer(this);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
     }
 
     private Tuple<Integer, Move> miniMax(GameState s, int depth, MiniMaxType type, Move m){
-        if(depth == 0 || terminalNode(s)) return new Tuple<>(evalFunc.evaluate(s), m);
+        if(depth == 0 || terminalNode(s)) return new Tuple<>(evalFunc.evaluate(s, this), m);
         Tuple<Integer, Move> score;
         if(type == MAX){
             score = new Tuple<>(Integer.MIN_VALUE, null);

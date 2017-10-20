@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GameState {
 
-    private List<Piece> pieces;
+    private Set<Piece> pieces;
 
     private Game game;
 
@@ -16,7 +16,7 @@ public class GameState {
 
 
     public GameState(List<Piece> pieces, Game game, IPlayer startingPlayer) {
-        this.pieces = pieces;
+        this.pieces = new HashSet<>(pieces);
         this.game = game;
         this.currentPlayer = startingPlayer;
     }
@@ -24,7 +24,7 @@ public class GameState {
 
     // Copy constructor
     public GameState(GameState gameState) {
-        this.pieces = new ArrayList<>();
+        this.pieces = new HashSet<>();
         this.game = gameState.game;
         for (Piece piece : gameState.pieces) {
             this.pieces.add(piece.copy());
@@ -42,7 +42,11 @@ public class GameState {
         return playerPieces;
     }
 
-    private void setPieces(List<Piece> pieces){
+    public Set<Piece> getPieces() {
+        return pieces;
+    }
+
+    private void setPieces(Set<Piece> pieces){
         this.pieces = pieces;
     }
 
@@ -145,10 +149,6 @@ public class GameState {
         return true;
     }
 
-    public List<Piece> getPieces() {
-        return pieces;
-    }
-
     public List<Move> getMoves(IPlayer player) {
         List<Piece> pieces = getPlayerPieces(player);
         ArrayList<Move> moves = new ArrayList<>();
@@ -193,7 +193,7 @@ public class GameState {
                .size() != 0;
     }
 
-    private List<CaptureMove> getCaptures(Move move) {
+    public List<CaptureMove> getCaptures(Move move) {
 
         ArrayList<CaptureMove> captureMoves = new ArrayList<>();
         GameState newState = getNewState(move);
@@ -239,7 +239,7 @@ public class GameState {
         return captureMoves;
     }
 
-    private List<Piece> getClosestPieces(Cell start, GameState gameState, List<Piece> pieces) {
+    private List<Piece> getClosestPieces(Cell start, GameState gameState, Collection<Piece> pieces) {
         HashMap<CellDirection, Tuple<Piece, Integer>> closestPiece = new HashMap<>();
         for (CellDirection direction : CellDirection.values()) closestPiece.put(direction, null);
 
@@ -301,6 +301,11 @@ public class GameState {
         } catch (IllegalStateException ex){
             return null;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return pieces.hashCode();
     }
 
     public boolean hasAllPieces(IPlayer player){

@@ -14,7 +14,7 @@ public interface IQueryable<T> extends Iterable<T> {
 
     public T first();
 
-    public T Single() ;
+    public T single() ;
 
     public boolean any();
 }

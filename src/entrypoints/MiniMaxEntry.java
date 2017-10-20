@@ -1,8 +1,10 @@
 package entrypoints;
 
+import algorithms.ManualPlayer;
 import algorithms.MiniMaxPlayer;
 import algorithms.RandomPlayer;
 import algorithms.WeightedEvaluation;
+import algorithms.features.IFeature;
 import game.*;
 
 /**
@@ -13,8 +15,9 @@ public class MiniMaxEntry {
 
     public static void main(String[] args) {
         Board board = new BoardGenerator(5).build();
-        IPlayer r1 = new RandomPlayer(System.currentTimeMillis());
-        IPlayer r2 = new MiniMaxPlayer<>(new WeightedEvaluation(), 2);
+        //IPlayer r1 = new RandomPlayer(System.currentTimeMillis());
+        IPlayer r1 = new ManualPlayer();
+        IPlayer r2 = new MiniMaxPlayer<>(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2);
         Game game = new Game(board, r1, r2);
         GameResult result = game.play();
     }

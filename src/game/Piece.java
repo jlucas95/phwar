@@ -37,6 +37,26 @@ public abstract class Piece implements IPiece{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Piece piece = (Piece) o;
+
+        if (charge != piece.charge) return false;
+        if (ID != piece.ID) return false;
+        return cell.equals(piece.cell);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cell.hashCode();
+        result = 31 * result + charge;
+        result = 31 * result + ID;
+        return result;
+    }
+
     public Cell getCell() {
         return cell;
     }
