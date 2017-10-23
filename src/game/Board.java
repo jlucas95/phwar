@@ -5,12 +5,14 @@ import java.util.ArrayList;
 public class Board {
 
 
-    private ArrayList<Cell> cells = new ArrayList<>();
+    private final int size;
 
+    private ArrayList<Cell> cells = new ArrayList<>();
     private Cell center;
 
-    public Board(ArrayList<Cell> cells) {
+    public Board(ArrayList<Cell> cells, int size) {
         this.cells = cells;
+        this.size = size;
     }
 
     public Cell getCell(String label){
@@ -29,6 +31,10 @@ public class Board {
         return center;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public Cell getCell(int x, int y, int z){
         return getCell(new Coordinate(x,y,z));
     }
@@ -42,4 +48,7 @@ public class Board {
         throw new IllegalArgumentException("Cell with given coordinates does not exist.");
     }
 
+    public ArrayList<Cell> getCells() {
+        return cells;
+    }
 }

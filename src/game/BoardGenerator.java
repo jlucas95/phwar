@@ -36,7 +36,7 @@ public class BoardGenerator {
         }
 
 
-        return new Board(cells);
+        return new Board(cells, depth);
     }
 
 

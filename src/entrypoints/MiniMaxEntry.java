@@ -18,7 +18,7 @@ public class MiniMaxEntry {
         //IPlayer r1 = new RandomPlayer(System.currentTimeMillis());
         IPlayer r1 = new ManualPlayer();
         IPlayer r2 = new MiniMaxPlayer<>(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2);
-        Game game = new Game(board, r1, r2);
+        Game game = new Game(board, r1, r2, true);
         GameResult result = game.play();
     }
 

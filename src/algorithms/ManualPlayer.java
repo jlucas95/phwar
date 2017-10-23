@@ -50,6 +50,9 @@ public class ManualPlayer implements IPlayer {
             catch (IllegalStateException e){
                 System.out.println("No owned piece on that cell");
             }
+            catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
         }
         return returnMove;
     }

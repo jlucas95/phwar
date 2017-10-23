@@ -284,11 +284,11 @@ public class GameState {
         boolean P2Defeated = !hasAllPieces(game.player2);
         boolean neutronInF6 = neutronInMiddle();
         
-        boolean b = P1defeated || P2Defeated;
+        boolean b = P1defeated || P2Defeated || neutronInF6;
         return b;
     }
 
-    private boolean neutronInMiddle() {
+    public boolean neutronInMiddle() {
         return getNeutronInMiddle() != null;
     }
 
