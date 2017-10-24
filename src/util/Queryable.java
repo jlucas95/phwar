@@ -63,18 +63,18 @@ abstract public class Queryable<T> extends ArrayList<T> {
         return size() != 0;
     }
 
-    public int sumInt(Function<T, Integer> sumFunction){
+    public int sumInt(Function<T, Integer> selector){
         int sum = 0;
         for(T t : this){
-            sum += sumFunction.apply(t);
+            sum += selector.apply(t);
         }
         return sum;
     }
 
-    public double sumDouble(Function<T, Double> sumFunction){
+    public double sumDouble(Function<T, Double> selector){
         double sum = 0;
         for(T t : this){
-            sum += sumFunction.apply(t);
+            sum += selector.apply(t);
         }
         return sum;
     }
@@ -87,6 +87,11 @@ abstract public class Queryable<T> extends ArrayList<T> {
             }
         }
         return distinct;
+    }
+
+    public double average(Function<T, Double> selector){
+        double sum = this.sumDouble(selector);
+        return sum/size();
     }
 
 

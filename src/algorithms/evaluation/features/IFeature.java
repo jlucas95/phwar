@@ -1,15 +1,14 @@
-package algorithms.features;
+package algorithms.evaluation.features;
 
 import game.GameState;
 import game.IPlayer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public interface IFeature {
-    public double score(GameState state, IPlayer player);
+    public double score(GameState state, IPlayer player) throws FeatureException;
 
     public static Map<IFeature, Double> getFeatures(double defaultWeight){
         ArrayList<IFeature> features = new ArrayList<>();
@@ -20,6 +19,7 @@ public interface IFeature {
         features.add(new PieceFeature());
         features.add(new PositronFeature());
         features.add(new PossibleMovesFeature());
+        features.add(new PossibleCapturesFeature());
 
         HashMap<IFeature, Double> map = new HashMap<>();
         for (IFeature feature : features) {

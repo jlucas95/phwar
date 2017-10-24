@@ -10,7 +10,4 @@ public abstract class Player implements IPlayer {
     public void setGame(Game game) {
         this.game = game;
     }
-
-    @Override
-    abstract public Move getMove(GameState state);
 }

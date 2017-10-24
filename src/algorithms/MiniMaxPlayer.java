@@ -1,8 +1,8 @@
 package algorithms;
 
+import algorithms.evaluation.EvaluationFunction;
 import game.GameState;
 import game.Move;
-import game.Player;
 import util.Tuple;
 
 import static algorithms.MiniMaxType.MAX;
@@ -14,6 +14,7 @@ import static algorithms.MiniMaxType.MIN;
 public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
 
     private X evalFunc;
+
     private int searchDept;
 
     public MiniMaxPlayer(X evalFunction, int searchDept){
@@ -22,12 +23,17 @@ public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
     }
 
     @Override
-    public Move getMove(GameState state) {
+    Move run(GameState state) {
         return miniMax(state, searchDept, MAX, null).getSecond();
     }
 
     private Tuple<Integer, Move> miniMax(GameState s, int depth, MiniMaxType type, Move m){
-        if(depth == 0 || terminalNode(s)) return new Tuple<>(evalFunc.evaluate(s, this), m);
+        nodesVisited++;
+        if(depth == 0 || terminalNode(s)) {
+            nodesEvaluated++;
+            return new Tuple<>(evalFunc.evaluate(s, this), m);
+        }
+
         Tuple<Integer, Move> score;
         if(type == MAX){
             score = new Tuple<>(Integer.MIN_VALUE, null);

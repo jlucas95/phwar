@@ -19,6 +19,5 @@ public class ExpandEntry {
         Game game = new Game(board, r1, r2);
         GameState startState = GameState.getTestState(r1, r2, game);
         List<Move> moves = startState.getMoves(r2);
-
     }
 }

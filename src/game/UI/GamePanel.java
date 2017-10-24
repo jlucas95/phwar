@@ -11,26 +11,30 @@ import java.awt.*;
 public class GamePanel extends JPanel{
 
     private final Game game;
-
+    private Move move;
     public void setState(GameState state) {
         this.state = state;
     }
 
+
     private GameState state;
 
-    private Color fillColor = Color.LIGHT_GRAY;
-    private Color outLineColor = Color.BLACK;
+    final private Color fillColor = Color.LIGHT_GRAY;
+    final private Color outLineColor = Color.BLACK;
 
-    private Color P1CircleColor = Color.BLACK;
-    private Color P1SignColor = Color.WHITE;
+    final private Color P1CircleColor = Color.BLACK;
+    final private Color P1SignColor = Color.WHITE;
 
-    private Color P2CircleColor = Color.WHITE;
-    private Color P2SignColor = Color.BLACK;
+    final private Color P2CircleColor = Color.WHITE;
+    final private Color P2SignColor = Color.BLACK;
+
+    final private Color moveColor = Color.YELLOW;
+    final private float moveLineWidth = 3;
+    final private Color captureColor = Color.RED;
 
     @Override
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
-        Polygon polygon = new Polygon();
         Dimension panelSize = this.getSize();
         Point center = new Point((int)panelSize.getWidth()/2, (int)panelSize.getHeight()/2);
 
@@ -73,6 +77,35 @@ public class GamePanel extends JPanel{
                 graphics.setColor(this.outLineColor);
                 graphics.drawPolygon(sign);
             }
+            // draw move
+            Stroke oldStroke = ((Graphics2D) graphics).getStroke();
+            Cell origin = move.getOrigin();
+            Cell destination;
+            if (move.getClass()==CaptureMove.class)
+                destination = ((CaptureMove)move).getMoveDestination();
+            else
+                destination = move.getDestination();
+
+            Point originPoint = cellCenterLocation(origin, w, h, center);
+            Point destinationPoint = cellCenterLocation(destination, w, h, center);
+            ((Graphics2D) graphics).setStroke(new BasicStroke(moveLineWidth));
+            graphics.setColor(moveColor);
+            graphics.drawLine(originPoint.x, originPoint.y, destinationPoint.x, destinationPoint.y);
+            if (move.getClass() == CaptureMove.class) {
+                CaptureMove captureMove = (CaptureMove) move;
+                // Draw the capturing
+                // might have to make field out of this in CaptureMove
+                Cell cell = captureMove.getCapturingPiece().getCell();
+                Cell cell1 = captureMove.getCapturedPiece().getCell();
+                Point captureOrigin = cellCenterLocation(cell, w, h, center);
+                Point captureDestination = cellCenterLocation(cell1, w, h, center);
+
+                graphics.setColor(this.captureColor);
+                graphics.drawLine(captureOrigin.x, captureOrigin.y, captureDestination.x, captureDestination.y);
+            }
+            ((Graphics2D) graphics).setStroke(oldStroke);
+
+
 
         }
 
@@ -82,20 +115,6 @@ public class GamePanel extends JPanel{
         int xOffset = (int) Math.round((cell.getX()) * (0.75*w));
         int yOffset = ((cell.getY() - cell.getZ()) * -1) * (h/2);
         return new Point(center.x + xOffset, center.y + yOffset);
-    }
-
-
-    private void drawPiece(Graphics graphics, Piece piece, int w, int h) {
-
-        drawPieceCircle(graphics, piece, w, h);
-        drawPieceSign(graphics, piece, w, h);
-    }
-
-    private void drawPieceCircle(Graphics graphics, Piece piece, int w, int h) {
-
-    }
-
-    private void drawPieceSign(Graphics graphics, Piece piece, int w, int h) {
     }
 
     private void drawHexagon(Graphics graphics, Hexagon hexagon) {
@@ -112,4 +131,7 @@ public class GamePanel extends JPanel{
         this.game = game;
     }
 
+    public void setMove(Move move) {
+        this.move = move;
+    }
 }

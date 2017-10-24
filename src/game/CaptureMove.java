@@ -7,8 +7,10 @@ import util.QueryableList;
  */
 public class CaptureMove extends Move {
     Piece capturedPiece;
+
     Piece capturingPiece;
     CaptureMove followCapture = null;
+
     boolean isFollowCapture;
 
     public CaptureMove(Move move, Piece piece, Piece playerPiece) {
@@ -17,6 +19,7 @@ public class CaptureMove extends Move {
         this.capturedPiece = piece;
         this.capturingPiece = playerPiece;
     }
+
 
     // copy constructor
     public CaptureMove(CaptureMove m){
@@ -38,10 +41,12 @@ public class CaptureMove extends Move {
         Move move = new Move(capturingPiece, capturingPiece.getCell(), capturedPiece.getCell());
         gameState.apply(move);
     }
-
     @Override
     public Cell getDestination(){
         return capturedPiece.getCell();
+    }
+    public Cell getMoveDestination(){
+        return super.getDestination();
     }
 
     @Override
@@ -50,5 +55,17 @@ public class CaptureMove extends Move {
         if(!isFollowCapture) s = super.toString() + " || " + s;
         if(followCapture != null) s += " || " + followCapture.toString();
         return s;
+    }
+
+    public Piece getCapturedPiece() {
+        return capturedPiece;
+    }
+
+    public Piece getCapturingPiece() {
+        return capturingPiece;
+    }
+
+    public CaptureMove getFollowCapture() {
+        return followCapture;
     }
 }

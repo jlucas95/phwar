@@ -3,13 +3,14 @@ package game;
 
 
 import game.UI.GamePanel;
-import oracle.jrockit.jfr.JFR;
 
 import javax.swing.*;
 import java.awt.*;
 
 
 public class Game {
+
+    private final boolean log = false;
 
     IPlayer player1;
     IPlayer player2;
@@ -18,6 +19,8 @@ public class Game {
 
     Board board;
     int turn;
+
+    private final long showMilliseconds = 10_000;
 
     public GameState state;
 
@@ -41,6 +44,8 @@ public class Game {
         JFrame frame = new JFrame();
         panel = new GamePanel(this);
         frame.add(panel);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Dimension dimension = new Dimension(600, 600);
         panel.setPreferredSize(dimension);
@@ -73,11 +78,11 @@ public class Game {
         IPlayer currentPlayer = player1;
         while (!done){
             drawState(state);
-            System.out.println("playing turn " + turn);
+            if(log) System.out.println("playing turn " + turn);
             long start = System.nanoTime();
             Move move = currentPlayer.getMove(state);
             long duration = System.nanoTime() - start;
-            System.out.println(currentPlayer + " took " + duration/1_000_000 + " ms for move: " + move);
+            if(log) System.out.println(currentPlayer + " took " + duration/1_000_000 + " ms for move: " + move);
              state = state.getNewState(move);
 
             // determine end of game.
@@ -85,8 +90,33 @@ public class Game {
             //switch players
             currentPlayer = otherPlayer(currentPlayer);
             turn++;
+            drawMove(move);
+            show(start);
         }
         return new GameResult(turn, state, determineWinner());
+    }
+
+    private void show(long start) {
+        if (panel == null) return;
+        long now = System.nanoTime();
+        // convert from nano to milliseconds
+        long millisPassed = (now - start)/1_000_000;
+
+        long showTimeLeft = this.showMilliseconds - millisPassed;
+        if(showTimeLeft > 0){
+            try{
+                Thread.sleep(showTimeLeft);
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void drawMove(Move move) {
+        if(panel == null) return;
+        panel.setMove(move);
     }
 
     private IPlayer determineWinner() {

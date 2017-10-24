@@ -1,4 +1,4 @@
-package algorithms.features;
+package algorithms.evaluation.features;
 
 import game.Electron;
 import game.GameState;

@@ -1,9 +1,12 @@
 package algorithms;
 
+import algorithms.evaluation.EvaluationFunction;
 import game.GameState;
+import game.IPlayer;
 import game.Move;
-import game.Player;
 import util.Tuple;
+
+import java.util.List;
 
 /**
  * Created by Jan on 13-10-2017.
@@ -18,17 +21,23 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
     }
 
     @Override
-    public Move getMove(GameState state) {
+    Move run(GameState state) {
         Tuple<Integer, Move> integerMoveTuple = alphaBeta(state, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, null);
         return integerMoveTuple.getSecond();
     }
 
     private Tuple<Integer, Move> alphaBeta(GameState s, int depth, int alpha, int beta, Move m) {
-        if(depth == 0 || terminalNode(s)) return new Tuple<>(
-                evalFunc.evaluate(s, this), m);
+        nodesVisited++;
+        if(depth == 0 || terminalNode(s)) {
+            nodesEvaluated++;
+            return new Tuple<>(
+                    getSign(s.getCurrentPlayer()) * evalFunc.evaluate(s, this), m);
+
+        }
         Tuple<Integer, Move> scoreT = new Tuple<Integer, Move>(Integer.MIN_VALUE, null);
 
-        for (Tuple<Move, GameState> successor : s.getSuccessors(s.getCurrentPlayer())) {
+        List<Tuple<Move, GameState>> successors = s.getSuccessors(s.getCurrentPlayer());
+        for (Tuple<Move, GameState> successor : successors) {
             GameState sPrime = successor.getSecond();
             Move move = successor.getFirst();
 
@@ -41,6 +50,11 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
 
         }
         return scoreT;
+    }
+
+    private Integer getSign(IPlayer currentPlayer) {
+        if (currentPlayer==this) return 1;
+        else return -1;
     }
 
     public String toString(){

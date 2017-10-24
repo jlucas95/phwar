@@ -1,4 +1,4 @@
-package algorithms.features;
+package algorithms.evaluation.features;
 
 import game.Cell;
 import game.GameState;
@@ -7,7 +7,6 @@ import game.Piece;
 import util.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.evaluation;
 
 import game.GameState;
 import game.IPlayer;

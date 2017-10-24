@@ -1,10 +1,8 @@
-package algorithms.features;
+package algorithms.evaluation.features;
 
 import game.*;
 import util.Queryable;
 import util.QueryableList;
-
-import java.util.List;
 
 public class PossibleMovesFeature implements IFeature{
     @Override
