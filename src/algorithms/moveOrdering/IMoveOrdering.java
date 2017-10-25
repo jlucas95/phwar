@@ -1,4 +1,4 @@
-package algorithms.evaluation.moveOrdering;
+package algorithms.moveOrdering;
 
 import game.Move;
 
