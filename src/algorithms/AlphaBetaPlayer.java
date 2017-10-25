@@ -1,6 +1,7 @@
 package algorithms;
 
 import algorithms.evaluation.EvaluationFunction;
+import algorithms.moveOrdering.IMoveOrdering;
 import game.GameState;
 import game.IPlayer;
 import game.Move;
@@ -11,13 +12,20 @@ import java.util.List;
 /**
  * Created by Jan on 13-10-2017.
  */
-public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
-    private X evalFunc;
+public class AlphaBetaPlayer extends Algorithm{
+    private EvaluationFunction evalFunc;
     private int depth;
+    private IMoveOrdering order;
 
-    public AlphaBetaPlayer(X evalFunc, int depth) {
+    public AlphaBetaPlayer(EvaluationFunction evalFunc, int depth) {
         this.evalFunc = evalFunc;
         this.depth = depth;
+    }
+
+    public AlphaBetaPlayer(EvaluationFunction evalFunc, int depth, IMoveOrdering order) {
+        this.evalFunc = evalFunc;
+        this.depth = depth;
+        this.order = order;
     }
 
     @Override
@@ -37,6 +45,7 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
         Tuple<Integer, Move> scoreT = new Tuple<Integer, Move>(Integer.MIN_VALUE, null);
 
         List<Tuple<Move, GameState>> successors = s.getSuccessors(s.getCurrentPlayer());
+        sort(successors);
         for (Tuple<Move, GameState> successor : successors) {
             GameState sPrime = successor.getSecond();
             Move move = successor.getFirst();
@@ -50,6 +59,12 @@ public class AlphaBetaPlayer<X extends EvaluationFunction> extends Algorithm{
 
         }
         return scoreT;
+    }
+
+    private void sort(List<Tuple<Move, GameState>> successors) {
+        if(this.order == null) return;
+
+        successors.sort(order);
     }
 
     private Integer getSign(IPlayer currentPlayer) {

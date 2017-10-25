@@ -94,5 +94,12 @@ abstract public class Queryable<T> extends ArrayList<T> {
         return sum/size();
     }
 
+    public boolean all(Function<T, Boolean> predicate){
+        for (T t : this) {
+            if(!predicate.apply(t)) return false;
+        }
+        return true;
+    }
+
 
 }

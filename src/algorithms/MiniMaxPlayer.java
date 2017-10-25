@@ -11,13 +11,13 @@ import static algorithms.MiniMaxType.MIN;
 /**
  * Created by Jan on 13-10-2017.
  */
-public class MiniMaxPlayer <X extends EvaluationFunction> extends Algorithm {
+public class MiniMaxPlayer extends Algorithm {
 
-    private X evalFunc;
+    private EvaluationFunction evalFunc;
 
     private int searchDept;
 
-    public MiniMaxPlayer(X evalFunction, int searchDept){
+    public MiniMaxPlayer(EvaluationFunction evalFunction, int searchDept){
         this.evalFunc = evalFunction;
         this.searchDept = searchDept;
     }
