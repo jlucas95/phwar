@@ -43,7 +43,7 @@ public class MCEvaluation implements EvaluationFunction {
 
         QueryableList<Integer> scores = new QueryableList<>();
         for (int i = 0; i < N; i++) {
-            scores.add(play_and_score(new GameState(state), player));
+            scores.add(play_and_score(new GameState(state), state.getCurrentPlayer()));
         }
         return (int) Math.round(scores.average(i->i.doubleValue()));
     }
