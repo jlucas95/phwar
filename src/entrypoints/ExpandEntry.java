@@ -2,6 +2,7 @@ package entrypoints;
 
 import algorithms.RandomPlayer;
 import game.*;
+import util.QueryableList;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class ExpandEntry {
         IPlayer r2 = new RandomPlayer(2);
         Game game = new Game(board, r1, r2);
         GameState startState = GameState.getTestState(r1, r2, game);
+        new QueryableList<>(startState.getPieces()).groupBy(p-> p.getOwner());
         List<Move> moves = startState.getMoves(r2);
     }
 }

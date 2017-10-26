@@ -24,7 +24,6 @@ abstract public class Queryable<T> extends ArrayList<T> {
         Grouping<K, T> groups = new Grouping<>();
         for (T t : this) {
             groups.add(selector.apply(t), t);
-            groups.addAll(selector.apply(t), this);
         }
         return groups;
     }

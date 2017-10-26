@@ -234,7 +234,6 @@ public class GameState {
                     }
                 }
             }
-
         }
         return captureMoves;
     }

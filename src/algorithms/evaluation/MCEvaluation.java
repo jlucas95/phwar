@@ -37,7 +37,6 @@ public class MCEvaluation implements EvaluationFunction {
     }
 
     public int MC(GameState state, IPlayer player){
-
         this.game = player.getGame();
         evaluatingPlayer = player;
 
@@ -45,7 +44,7 @@ public class MCEvaluation implements EvaluationFunction {
         for (int i = 0; i < N; i++) {
             scores.add(play_and_score(new GameState(state), state.getCurrentPlayer()));
         }
-        return (int) Math.round(scores.average(i->i.doubleValue()));
+        return (int) Math.round(scores.average(Integer::doubleValue));
     }
 
     public int play_and_score(GameState state, IPlayer player) {
@@ -66,6 +65,4 @@ public class MCEvaluation implements EvaluationFunction {
         if(state.getWinner() == evaluatingPlayer) return win;
         else  return loss;
     }
-
 }
-

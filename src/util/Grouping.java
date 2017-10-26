@@ -33,6 +33,7 @@ public class Grouping<Key, Element>
         }
         catch (IllegalStateException e){
             group = new Group<Key, Element>(key);
+            this.add(group);
         }
         return group;
     }

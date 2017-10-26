@@ -69,6 +69,7 @@ public class MTMCEvaluation implements EvaluationFunction {
             List<Integer> scores = new ArrayList<>();
             while (count.getCount() != 0) {
                 scores.add(play_and_score(new GameState(s), p));
+                count.countDown();
             }
             return scores;
         }
