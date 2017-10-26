@@ -15,10 +15,10 @@ public class Game {
     IPlayer player1;
     IPlayer player2;
 
-    GamePanel panel;
+    private GamePanel panel;
 
     Board board;
-    int turn;
+    private int turn;
 
     private final long showMilliseconds = 10_000;
 

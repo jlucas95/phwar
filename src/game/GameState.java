@@ -288,6 +288,15 @@ public class GameState {
         return b;
     }
 
+    public IPlayer getWinner(){
+        IPlayer player1 = game.player1;
+        IPlayer player2 = game.player2;
+        if(this.hasAllPieces(player1) && !this.hasAllPieces(player2)) return player1;
+        else if(!this.hasAllPieces(player1) && this.hasAllPieces(player2)) return player2;
+        else if(this.neutronInMiddle()) return this.getNeutronInMiddle().getOwner();
+        throw new IllegalStateException("End of game reached while both players have one of each piece.");
+    }
+
     public boolean neutronInMiddle() {
         return getNeutronInMiddle() != null;
     }

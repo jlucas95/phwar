@@ -11,15 +11,9 @@ import java.util.Scanner;
 /**
  * Created by Jan on 19-10-2017.
  */
-public class ManualPlayer implements IPlayer {
+public class ManualPlayer extends Player implements IPlayer {
 
-    Game game;
     private final Scanner reader;
-
-    @Override
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public ManualPlayer() {
 

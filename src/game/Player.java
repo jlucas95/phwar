@@ -10,4 +10,6 @@ public abstract class Player implements IPlayer {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public Game getGame(){ return this.game;}
 }
