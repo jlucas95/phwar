@@ -1,6 +1,7 @@
 package entrypoints;
 
 import algorithms.*;
+import algorithms.evaluation.MCEvaluation;
 import algorithms.evaluation.WeightedEvaluation;
 import algorithms.evaluation.features.IFeature;
 import algorithms.moveOrdering.CaptureMoveOrdering;
@@ -55,16 +56,34 @@ public class MoveOrderingExperiment implements Runnable{
 
     }
 
+    //Experiment 1 baseline
+//    IPlayer r1 = new RandomPlayer(randomSeed);
+//    Algorithm r2 = new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2);
+
+    //Experiment 2 move-ordering
+//    IPlayer r1 = new RandomPlayer(randomSeed);
+//    Algorithm r2 = new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2, new CaptureMoveOrdering());
+
+    //Experiment 3 monte-carlo and move ordering
+//    IPlayer r1 = new RandomPlayer(randomSeed);
+//    Algorithm r2 = new AlphaBetaPlayer(new MCEvaluation(10), 2, new CaptureMoveOrdering());
+
+    //Experiment 4 multi-threaded monte-carlo
+
     @Override
     public void run() {
         Board board = new BoardGenerator(5).build();
         for (int run = 0; run < runsPerThread; run++) {
             IPlayer r1 = new RandomPlayer(randomSeed);
-            Algorithm r2 = new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2, new CaptureMoveOrdering());
+            Algorithm r2 = new AlphaBetaPlayer(new MCEvaluation(10), 2, new CaptureMoveOrdering());
 
             Game game = new Game(board, r1, r2, false);
             GameResult result = game.play();
-            queue.add( num + run + "," + r2.averageVisited() + "," + r2.averageEvaluated() + "," + (result.getWinner() == r2));
+            queue.add(num + run + "," +
+                    r2.averageVisited() + "," +
+                    r2.averageEvaluated() + "," +
+                    (result.getWinner() == r2) + "," +
+                    r2.averageTimeElapsed());
         }
     }
 }

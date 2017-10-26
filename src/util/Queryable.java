@@ -14,6 +14,8 @@ abstract public class Queryable<T> extends ArrayList<T> {
         super(c);
     }
 
+    Queryable(int capacity) {super(capacity);}
+
     Queryable(){
         super();
     }

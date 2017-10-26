@@ -7,6 +7,7 @@ import game.Move;
 import util.QueryableList;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Jan on 24-10-2017.
@@ -32,6 +33,11 @@ public class MCEvaluation implements EvaluationFunction {
 
     @Override
     public int evaluate(GameState state, IPlayer player) {
+        return MC(state, player);
+    }
+
+    public int MC(GameState state, IPlayer player){
+
         this.game = player.getGame();
         evaluatingPlayer = player;
 
@@ -42,7 +48,7 @@ public class MCEvaluation implements EvaluationFunction {
         return (int) Math.round(scores.average(i->i.doubleValue()));
     }
 
-    private int play_and_score(GameState state, IPlayer player) {
+    public int play_and_score(GameState state, IPlayer player) {
         if (state.isEndgame()) return determineScore(state);
         state = doRandomMove(state, player);
         return play_and_score(state, game.otherPlayer(player));

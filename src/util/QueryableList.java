@@ -13,6 +13,8 @@ public class QueryableList<T> extends Queryable<T> implements IQueryable<T> {
         super(list);
     }
 
+    public QueryableList(int capacity){ super(capacity);}
+
     public QueryableList(){super();}
 
 

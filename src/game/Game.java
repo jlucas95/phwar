@@ -20,7 +20,7 @@ public class Game {
     Board board;
     private int turn;
 
-    private final long showMilliseconds = 10_000;
+    private final long showMilliseconds = 2_000;
 
     public GameState state;
 
