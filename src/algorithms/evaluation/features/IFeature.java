@@ -27,4 +27,8 @@ public interface IFeature {
         }
         return map;
     }
+
+    default String getString(){
+        return this.getClass().getSimpleName();
+    }
 }
