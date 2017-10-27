@@ -1,6 +1,10 @@
-package game;
+package game.pieces;
 
-public abstract class Piece implements IPiece{
+import game.Cell;
+import game.IPiece;
+import game.IPlayer;
+
+public abstract class Piece implements IPiece {
 
     private Cell cell;
 

@@ -2,7 +2,7 @@ package algorithms.evaluation.features;
 
 import game.GameState;
 import game.IPlayer;
-import game.Positron;
+import game.pieces.Positron;
 
 /**
  * Created by Jan on 19-10-2017.

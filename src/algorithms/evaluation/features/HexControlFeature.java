@@ -3,7 +3,7 @@ package algorithms.evaluation.features;
 import game.Cell;
 import game.GameState;
 import game.IPlayer;
-import game.Piece;
+import game.pieces.Piece;
 import util.*;
 
 import java.util.HashSet;

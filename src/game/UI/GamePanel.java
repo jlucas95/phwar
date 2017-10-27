@@ -1,6 +1,9 @@
 package game.UI;
 
 import game.*;
+import game.pieces.Electron;
+import game.pieces.Neutron;
+import game.pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;

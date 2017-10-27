@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class WeightsExperiment {
 
-    private static int gamesPerFeatureSet = 5;
+    private static int gamesPerFeatureSet = 10;
     private static int depth = 2;
 
     public static void main(String[] args) {

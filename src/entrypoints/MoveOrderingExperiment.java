@@ -3,6 +3,7 @@ package entrypoints;
 import algorithms.*;
 import algorithms.evaluation.CaptureMovesFirstStrategy;
 import algorithms.evaluation.MCEvaluation;
+import algorithms.evaluation.MTMCEvaluation;
 import algorithms.evaluation.WeightedEvaluation;
 import algorithms.evaluation.features.IFeature;
 import algorithms.moveOrdering.CaptureMoveOrdering;
@@ -46,21 +47,21 @@ public class MoveOrderingExperiment {
 //                randomSupplier,
 //                () -> new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 2, new CaptureMoveOrdering())));
 //
-//        experiments.add(new Experiment("Experiment 6 Depth-one search",
-//                randomSupplier,
-//                () -> new DepthOneSearch(100)));
+        experiments.add(new Experiment("Experiment 6 Depth-one search",
+                randomSupplier,
+                () -> new DepthOneSearch(100)));
 //
 //        experiments.add(new Experiment("Experiment 3 monte-carlo and move ordering",
 //                randomSupplier,
 //                () -> new AlphaBetaPlayer(new MCEvaluation(10), 2, new CaptureMoveOrdering()) ));
 //
-//        experiments.add(new Experiment("Experiment 4 monte carlo with playStrategy and move ordering",
-//                randomSupplier,
-//                () -> new AlphaBetaPlayer(new MCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
-
-        experiments.add(new Experiment("Alpha beta with move ordering and depth 1",
+        experiments.add(new Experiment("Experiment 4 monte carlo with playStrategy and move ordering",
                 randomSupplier,
-                ()-> new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 1, new CaptureMoveOrdering())));
+                () -> new AlphaBetaPlayer(new MCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
+
+//        experiments.add(new Experiment("Alpha beta with move ordering and depth 1",
+//                randomSupplier,
+//                ()-> new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 1, new CaptureMoveOrdering())));
 
 //        experiments.add(new Experiment("Alpha beta with move ordering and depth 3",
 //                randomSupplier,
@@ -69,18 +70,26 @@ public class MoveOrderingExperiment {
 //        experiments.add(new Experiment("Alpha beta with move ordering and depth 4",
 //                randomSupplier,
 //                ()-> new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 4, new CaptureMoveOrdering())));
-        //Experiment 5 multi-threaded monte-carlo
-        //experiments.add(new Experiment());
+
+        experiments.add(new Experiment("Experiment 5 multi-threaded monte-carlo",
+                randomSupplier,
+                () -> new AlphaBetaPlayer(new MTMCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
+
 
         // run experiments
+        WeightsExperiment.main(null);
         for (Experiment experiment : experiments) {
-            experiment.runExperiment(80);
+            if(experiment.getName().equals("Experiment 5 multi-threaded monte-carlo")){
+                experiment.runExperiment(40, 1);
+            }
+            else{
+                experiment.runExperiment(40);
+            }
         }
         System.out.println();
         System.out.println();
         System.out.println("DONE");
         System.out.println(LocalDateTime.now());
-
     }
 
 

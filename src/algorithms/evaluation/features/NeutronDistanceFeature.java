@@ -1,6 +1,8 @@
 package algorithms.evaluation.features;
 
 import game.*;
+import game.pieces.Neutron;
+import game.pieces.Piece;
 import util.QueryableList;
 
 public class NeutronDistanceFeature implements IFeature {

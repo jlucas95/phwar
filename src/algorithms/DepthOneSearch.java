@@ -37,6 +37,7 @@ public class DepthOneSearch extends Algorithm {
         double max = Double.MIN_VALUE;
         Move chosen = null;
         for (Move move : moves) {
+            this.nodesEvaluated++;
             double score = scoreMove(state.getNewState(move));
             if(score > max){
                 chosen = move;
@@ -51,12 +52,14 @@ public class DepthOneSearch extends Algorithm {
         QueryableList<Integer> scores = new QueryableList<>();
         for (int i = 0; i < N; i++) {
             // We always make the first move
+            nodesVisited++;
             scores.add(play_and_score(state, state.getOpponent(this)));
         }
         return scores.average(Integer::doubleValue);
     }
 
     public int play_and_score(GameState state, IPlayer player) {
+        nodesVisited++;
         if (state.isEndgame()) return determineScore(state);
         List<Move> moves = state.getMoves(player);
         Move move = this.strategy.pickMove(moves);

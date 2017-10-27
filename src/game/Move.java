@@ -1,5 +1,6 @@
 package game;
 
+import game.pieces.Piece;
 import util.QueryableList;
 
 public class Move {

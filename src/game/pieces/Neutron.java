@@ -1,4 +1,6 @@
-package game;
+package game.pieces;
+
+import game.IPlayer;
 
 public class Neutron extends Piece {
     public Neutron(IPlayer owner) {

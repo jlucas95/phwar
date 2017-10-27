@@ -1,4 +1,6 @@
-package game;
+package game.pieces;
+
+import game.IPlayer;
 
 public class Positron extends Piece {
     public Positron(IPlayer owner) {

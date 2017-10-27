@@ -1,11 +1,12 @@
 package game;
 
-import game.UI.GamePanel;
+import game.pieces.Electron;
+import game.pieces.Neutron;
+import game.pieces.Piece;
+import game.pieces.Positron;
 import util.QueryableList;
 import util.Tuple;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

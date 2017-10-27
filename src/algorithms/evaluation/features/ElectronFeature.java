@@ -1,6 +1,6 @@
 package algorithms.evaluation.features;
 
-import game.Electron;
+import game.pieces.Electron;
 import game.GameState;
 import game.IPlayer;
 

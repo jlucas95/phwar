@@ -2,7 +2,7 @@ package algorithms.evaluation.features;
 
 import game.GameState;
 import game.IPlayer;
-import game.Piece;
+import game.pieces.Piece;
 import util.Group;
 import util.IGrouping;
 import util.QueryableList;

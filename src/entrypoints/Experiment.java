@@ -14,9 +14,9 @@ class Experiment implements Runnable{
 
     private final String name;
     private final Supplier<IPlayer> p1;
-    private final int processors;
+    private int processors;
 
-    private String getName() {
+    public String getName() {
         return name;
     }
 
@@ -24,7 +24,7 @@ class Experiment implements Runnable{
         return p1;
     }
 
-    private Supplier<Algorithm> getP2() {
+    public Supplier<Algorithm> getP2() {
         return p2;
     }
 
@@ -39,6 +39,11 @@ class Experiment implements Runnable{
         this.name = name;
         p1 = P1;
         p2 = P2;
+    }
+
+    public void runExperiment(int amount, int threads){
+        processors = threads;
+        runExperiment(amount);
     }
 
     public void runExperiment( int amount){

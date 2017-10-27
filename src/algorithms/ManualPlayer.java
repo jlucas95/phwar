@@ -1,10 +1,9 @@
 package algorithms;
 
 import game.*;
+import game.pieces.Piece;
 import util.QueryableList;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
 
