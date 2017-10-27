@@ -6,6 +6,8 @@ import game.UI.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
 
 
 public class Game {
@@ -20,7 +22,7 @@ public class Game {
     Board board;
     private int turn;
 
-    private final long showMilliseconds = 2_000;
+    private final long showMilliseconds = 200;
 
     public GameState state;
 
@@ -95,6 +97,7 @@ public class Game {
         }
         return new GameResult(turn, state, determineWinner());
     }
+
 
     private void show(long start) {
         if (panel == null) return;

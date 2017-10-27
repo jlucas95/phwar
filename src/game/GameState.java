@@ -1,9 +1,13 @@
 package game;
 
+import game.UI.GamePanel;
 import util.QueryableList;
 import util.Tuple;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class GameState {
 
@@ -339,14 +343,19 @@ public class GameState {
             Cell currentCell = origin;
             boolean canContinue = true;
             while(canContinue){
-                currentCell = currentCell.getNeigbour(direction);
-                // stop if cell is occupied or if null
-                if(currentCell != null && !cellOccupied(currentCell)){
+                try{
+                    currentCell = currentCell.getNeigbour(direction);
+                    if(currentCell != null && !cellOccupied(currentCell)){
+                        canContinue = false;
+                    }
+                    else{
+                        cells.add(currentCell);
+                    }
+                }
+                catch (NullPointerException e){
                     canContinue = false;
                 }
-                else{
-                    cells.add(currentCell);
-                }
+                // stop if cell is occupied or if null
             }
         }
         return cells;

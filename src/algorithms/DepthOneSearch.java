@@ -58,20 +58,15 @@ public class DepthOneSearch extends Algorithm {
 
     public int play_and_score(GameState state, IPlayer player) {
         if (state.isEndgame()) return determineScore(state);
-        state = doRandomMove(state, player);
-        return play_and_score(state, game.otherPlayer(player));
-    }
-
-    private GameState doRandomMove(GameState state , IPlayer player){
         List<Move> moves = state.getMoves(player);
         Move move = this.strategy.pickMove(moves);
-        state.apply(move);
-        return state;
+        return play_and_score(state.getNewState(move), game.otherPlayer(player));
     }
 
     private int determineScore(GameState state)
     {
-        if(state.getWinner() == this) return 10;
+        if(state.getWinner() == this) {
+            return 10;}
         else  return -10;
     }
 

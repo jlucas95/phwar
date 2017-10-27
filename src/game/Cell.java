@@ -30,7 +30,9 @@ public class Cell implements Cloneable {
 
     public Cell setNeighbour(Cell c, CellDirection direction){ return neighbours.put(direction, c); }
 
-    public Cell getNeigbour(CellDirection direction) { return neighbours.get(direction); }
+    public Cell getNeigbour(CellDirection direction) {
+        return neighbours.get(direction);
+    }
 
     public boolean isNeighbour(Cell cell){
         // Return false for itself
