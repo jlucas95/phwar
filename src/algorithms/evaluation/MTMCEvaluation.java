@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class MTMCEvaluation implements EvaluationFunction {
+public class MTMCEvaluation implements IEvaluationFunction {
 
     private final int threadNum;
     private final IPlayStrategy strategy;

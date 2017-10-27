@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class WeightedEvaluation implements EvaluationFunction, Serializable {
+public class WeightedEvaluation implements IEvaluationFunction, Serializable {
 
     private Map<IFeature, Double> features;
 

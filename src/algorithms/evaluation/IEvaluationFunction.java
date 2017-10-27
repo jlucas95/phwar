@@ -6,6 +6,6 @@ import game.IPlayer;
 /**
  * Created by Jan on 13-10-2017.
  */
-public interface EvaluationFunction {
+public interface IEvaluationFunction {
     public int evaluate(GameState state, IPlayer player);
 }

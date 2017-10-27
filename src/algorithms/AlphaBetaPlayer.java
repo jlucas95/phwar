@@ -1,6 +1,6 @@
 package algorithms;
 
-import algorithms.evaluation.EvaluationFunction;
+import algorithms.evaluation.IEvaluationFunction;
 import algorithms.moveOrdering.IMoveOrdering;
 import game.GameState;
 import game.IPlayer;
@@ -13,16 +13,16 @@ import java.util.List;
  * Created by Jan on 13-10-2017.
  */
 public class AlphaBetaPlayer extends Algorithm{
-    private EvaluationFunction evalFunc;
+    private IEvaluationFunction evalFunc;
     private int depth;
     private IMoveOrdering order;
 
-    public AlphaBetaPlayer(EvaluationFunction evalFunc, int depth) {
+    public AlphaBetaPlayer(IEvaluationFunction evalFunc, int depth) {
         this.evalFunc = evalFunc;
         this.depth = depth;
     }
 
-    public AlphaBetaPlayer(EvaluationFunction evalFunc, int depth, IMoveOrdering order) {
+    public AlphaBetaPlayer(IEvaluationFunction evalFunc, int depth, IMoveOrdering order) {
         this.evalFunc = evalFunc;
         this.depth = depth;
         this.order = order;

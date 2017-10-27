@@ -1,6 +1,6 @@
 package algorithms;
 
-import algorithms.evaluation.EvaluationFunction;
+import algorithms.evaluation.IEvaluationFunction;
 import game.GameState;
 import game.Move;
 import util.Tuple;
@@ -13,11 +13,11 @@ import static algorithms.MiniMaxType.MIN;
  */
 public class MiniMaxPlayer extends Algorithm {
 
-    private EvaluationFunction evalFunc;
+    private IEvaluationFunction evalFunc;
 
     private int searchDept;
 
-    public MiniMaxPlayer(EvaluationFunction evalFunction, int searchDept){
+    public MiniMaxPlayer(IEvaluationFunction evalFunction, int searchDept){
         this.evalFunc = evalFunction;
         this.searchDept = searchDept;
     }

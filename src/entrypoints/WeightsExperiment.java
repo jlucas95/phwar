@@ -12,28 +12,27 @@ import java.util.function.Supplier;
 
 public class WeightsExperiment {
 
-    private static int gamesPerFeatureSet = 10;
+    private static int gamesPerFeatureSet = 5;
     private static int depth = 2;
 
     public static void main(String[] args) {
         Map<IFeature, Double> features = IFeature.getFeatures(0.0);
         double stepSize = 0.1;
         List<IFeature> entries = new ArrayList<>(features.keySet());
-        List<FeatureSet> featureSets = new QueryableList<FeatureSet>(createFeatureSets(entries)).where(set -> set.size() > 4);
+        List<FeatureSet> featureSets = createFeatureSets(entries);
         Supplier<IPlayer> randomSupplier = ()->new RandomPlayer(MoveOrderingExperiment.randomSeed);
 
 
         for (FeatureSet featureSet : featureSets) {
             Map<IFeature, Double> featureWeights = createMap(featureSet);
             // play games
-            Experiment experiment = new Experiment(
+            FeatureExperiment experiment = new FeatureExperiment(
                     featureSet.toString(),
                     randomSupplier,
                     () -> new AlphaBetaPlayer(new WeightedEvaluation(featureWeights), depth)
             );
-            experiment.runExperiment(2);
+            experiment.runExperiment(gamesPerFeatureSet);
         }
-
     }
 
     private static Map<IFeature, Double> createMap(FeatureSet featureSet) {

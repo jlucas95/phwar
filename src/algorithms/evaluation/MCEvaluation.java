@@ -7,12 +7,11 @@ import game.Move;
 import util.QueryableList;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Jan on 24-10-2017.
  */
-public class MCEvaluation implements EvaluationFunction {
+public class MCEvaluation implements IEvaluationFunction {
 
     private final int N;
     private final int win = 10;
