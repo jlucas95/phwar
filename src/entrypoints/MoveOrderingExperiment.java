@@ -10,7 +10,11 @@ import algorithms.moveOrdering.CaptureMoveOrdering;
 import game.*;
 import util.QueryableList;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -55,9 +59,9 @@ public class MoveOrderingExperiment {
 //                randomSupplier,
 //                () -> new AlphaBetaPlayer(new MCEvaluation(10), 2, new CaptureMoveOrdering()) ));
 //
-        experiments.add(new Experiment("Experiment 4 monte carlo with playStrategy and move ordering",
-                randomSupplier,
-                () -> new AlphaBetaPlayer(new MCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
+//        experiments.add(new Experiment("Experiment 4 monte carlo with playStrategy and move ordering",
+//                randomSupplier,
+//                () -> new AlphaBetaPlayer(new MCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
 
 //        experiments.add(new Experiment("Alpha beta with move ordering and depth 1",
 //                randomSupplier,
@@ -71,25 +75,38 @@ public class MoveOrderingExperiment {
 //                randomSupplier,
 //                ()-> new AlphaBetaPlayer(new WeightedEvaluation(IFeature.getFeatures(1.0)), 4, new CaptureMoveOrdering())));
 
-        experiments.add(new Experiment("Experiment 5 multi-threaded monte-carlo",
-                randomSupplier,
-                () -> new AlphaBetaPlayer(new MTMCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
+//        experiments.add(new Experiment("Experiment 5 multi-threaded monte-carlo",
+//                randomSupplier,
+//                () -> new AlphaBetaPlayer(new MTMCEvaluation(10, new CaptureMovesFirstStrategy()), 2, new CaptureMoveOrdering())));
 
-
+        File file = new File(String.format("data-%s.txt", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
+        PrintStream p;
+        try{
+            file.createNewFile();
+            p = new PrintStream(file);
+            System.setOut(p);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return;
+        }
         // run experiments
         WeightsExperiment.main(null);
-        for (Experiment experiment : experiments) {
-            if(experiment.getName().equals("Experiment 5 multi-threaded monte-carlo")){
-                experiment.runExperiment(40, 1);
-            }
-            else{
-                experiment.runExperiment(40);
-            }
-        }
+//        for (Experiment experiment : experiments) {
+//            if(experiment.getName().equals("Experiment 5 multi-threaded monte-carlo")){
+//                experiment.runExperiment(40, 1);
+//            }
+//            else{
+//                experiment.runExperiment(40);
+//            }
+//            System.out.flush();
+//        }
         System.out.println();
         System.out.println();
         System.out.println("DONE");
         System.out.println(LocalDateTime.now());
+        System.out.flush();
+        p.close();
     }
 
 

@@ -75,7 +75,7 @@ public class WeightsExperiment {
 
         @Override
         public String toString() {
-            StringJoiner stringJoiner = new StringJoiner(",", "{", "}");
+            StringJoiner stringJoiner = new StringJoiner(".", "{", "}");
             for (IFeature iFeature : this) {
                 stringJoiner.add(iFeature.getString());
             }
