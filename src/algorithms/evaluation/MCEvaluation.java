@@ -49,7 +49,7 @@ public class MCEvaluation implements IEvaluationFunction {
     public int play_and_score(GameState state, IPlayer player) {
         if (state.isEndgame()) return determineScore(state);
         state = doRandomMove(state, player);
-        return play_and_score(state, game.otherPlayer(player));
+        return play_and_score(state, state.getOpponent((player)));
     }
 
     private GameState doRandomMove(GameState state , IPlayer player){
